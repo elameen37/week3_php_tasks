@@ -45,7 +45,7 @@
 							<option>Ghana</option>
 							<option>South-Africa</option>
 						</select>
-					</label><br>
+					</label>
 					<button type="submit">Submit</button><br>
 				</form>
 			</div>
