@@ -1,25 +1,107 @@
 <?php
-	$name = $_POST['name'];
-	$email = $_POST['email'];
-	$dob = $_POST['dob'];
-	$gender = $_POST['gender'];
-	$country = $_POST['country'];
+$error = '';
+$name = '';
+$email = '';
+$dob = '';
+$gender = '';
+$country = '';
 
+function clean_text($string)
+{
+ 	$string = trim($string);
+ 	$string = stripslashes($string);
+ 	$string = htmlspecialchars($string);
+ 	return $string;
+}
 
-	echo "NAME: " . $name . "<br>";
-	echo "EMAIL: " . $email . "<br>";
-	echo "DATE OF BIRTH: " . $dob . "<br>";
-	echo "GENDER: " . $gender . "<br>";
-	echo "COUNTRY: " . $country . "<br>";
+if(isset($_POST["submit"]))
+{
+ if(empty($_POST["name"]))
+ {
+  	$error .= '<p><label class="text-danger">Please Enter your Name</label></p>';
+ }
+ else
+ {
+ $name = clean_text($_POST["name"]);
+  if(!preg_match("/^[a-zA-Z ]*$/",$name))
+  {
+   	$error .= '<p><label class="text-danger">Only letters and white space allowed</label></p>';
+  }
+ }
+ if(empty($_POST["email"]))
+ {
+  	$error .= '<p><label class="text-danger">Please Enter your Email</label></p>';
+ }
+ else
+ {
+  $email = clean_text($_POST["email"]);
+  if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+  {
+   	$error .= '<p><label class="text-danger">Invalid email format</label></p>';
+  }
+ }
+ 
+ if(empty($_POST["dob"]))
+ {
+  	$error .= '<p><label class="text-danger">Please Enter Date of birth </label></p>';
+ }
+ else
+ {
+ 	$dob = clean_text($_POST["dob"]);
+ }
+ 
+ 
+ if(empty($_POST["gender"]))
+ {
+	$error .= '<p><label class="text-danger">Please Enter your Gender</label></p>';
+ }
+ else
+ {
+ 	$gender = clean_text($_POST["gender"]);
+if(!preg_match("/^[a-zA-Z ]*$/",$gender))
+  {
+   	$error .= '<p><label class="text-danger">Only letters and white space allowed</label></p>';
+  }
+ }
+ 
+ if(empty($_POST["country"]))
+ {
+  	$error .= '<p><label class="text-danger">Please Enter your Country</label></p>';
+ }
+ else
+ {
+ 	$country = clean_text($_POST["country"]);
+ }
+ 
+ if($error == '')
+ {
+  	$file_open = fopen("userdata.csv", "a");
+  	$no_rows = count(file("userdata.csv"));
+  if($no_rows > 1)
+  {
+   	$no_rows = ($no_rows - 1) + 1;
+  }
+  $form_data = array(
+   'sr_no'  => $no_rows,
+   'name'  => $name,
+   'email'  => $email,
+   'dob' => $dob,
+   'gender' => $gender,
+   'country' => $country
+  );
+  fputcsv($file_open, $form_data);
+ 
+  	echo "YOUR DETAILS	<br/> <br/>"; 
 
-	//read the content of a file and display
-    $filename = "userdata.csv";
-    $file = fopen($filename, "w");//open file in write mode
-
-	fputcsv($file, array('user_data.php'));
-
-    $content = fwrite($file, filesize("user_data.php"));//read file
-    echo $content;
-    fclose($file);//close file
-
+  	print_r($form_data);
+  
+ }
+}
 ?>
+<br/><br/><br/>
+<html>
+	<body>
+	<center><a href = "index.php">back to registration page</a></center>
+</body>
+</html>
+

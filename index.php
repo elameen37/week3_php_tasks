@@ -1,3 +1,4 @@
+<?php $error = ''; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -17,18 +18,19 @@
 			<div class="inner">
 				<form action="user_data.php" method="POST">
 					<h4>REGISTRATION</h4>
+					<?php echo $error; ?>
 					<label for="name" class="form-group">
-						<input type="text" name="name" class="form-control"  required>
+						<input type="text" name="name" class="form-control"  required />
 						<span>Name</span>
 						<span class="border"></span>
 					</label>
 					<label for="email" class="form-group">
-						<input type="email" name="email" class="form-control"  required>
+						<input type="email" name="email" class="form-control"  required />
 						<span>Email</span>
 						<span class="border"></span>
 					</label>
 					<label for="dob" class="form-group">Date of Birth
-						<input type="date" name="dob" class="form-control"  required>
+						<input type="date" name="dob" class="form-control"  required />
 					</label>
 					<label for="gender" class="form-group">Gender
 						<select name="gender">
@@ -46,7 +48,7 @@
 							<option>South-Africa</option>
 						</select>
 					</label>
-					<button type="submit">Submit</button><br>
+					<button type="submit" name="submit">Submit</button><br>
 				</form>
 			</div>
 		</div>
