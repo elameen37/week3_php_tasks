@@ -11,4 +11,4 @@
 * Your page should send the form to a file called user_data.php, which does the following:
 
   * Save the user data into a file called userdata.csv
-  * Returns the data submitted to the users using the print_r method.
+  * Returns the data submitted to the users using the print_r method
